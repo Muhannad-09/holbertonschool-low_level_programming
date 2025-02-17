@@ -6,10 +6,11 @@
  */
 
 /**
- * print_sign - prints the sign of a number
- * @n: The number to be checked
- *
- * Return: 1 if n is greater than zero, 0 if n is zero, -1 if n is less than zero
+ * print_sign - checks if number is greater, less or equals to 0 and print sign
+ * @n: is the character is being checked
+ * Return: 1 if the number is greater than 0,
+ * returns 0 if the number is equals to 0,
+ * returns -1 if the number is less than 0
  */
 
 int print_sign(int n)
