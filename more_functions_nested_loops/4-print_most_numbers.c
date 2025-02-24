@@ -1,7 +1,7 @@
 #include "main.h"
 
 /*
- * File - 4-print_most _numbers.c
+ * File - 4-print_most_numbers.c
  * Created by: Muhannad Gsgs 10722@holbertonstudents.com
  */
 
