@@ -1,1 +1,1 @@
-Learning more about C functions an loops
+Learning more about C functions and loops
