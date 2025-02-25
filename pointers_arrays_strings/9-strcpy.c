@@ -6,9 +6,11 @@
  */
 
 /**
- * _strcpy-copies the string pointed to by src, including terminating null byte
+ * _strcpy - copies the string pointed to by src, including the terminating
+ * null byte, to the buffer pointed to by dest
  * @dest: pointer to the buffer where the string is copied
  * @src: pointer to the source string
+ *
  * Return: the pointer to dest
  */
 
