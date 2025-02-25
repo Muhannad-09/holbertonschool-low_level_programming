@@ -1,7 +1,7 @@
 #include "main.h"
 
 /*
- * File - 9-strcpy.c
+ * File - 9-string_copy_function.c
  * Created by: Muhannad Gsgs 10722@holbertonstudents.com
  */
 
@@ -20,8 +20,8 @@ char *_strcpy(char *dest, char *src)
 
 	while (src[i] != '\0')
 	{
-		dest[i] = src[i];
-		i++;
+	dest[i] = src[i];
+	i++;
 	}
 	dest[i] = '\0';
 
