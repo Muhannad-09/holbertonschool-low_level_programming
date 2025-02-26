@@ -1,7 +1,7 @@
 #include "main.h"
 
 /*
- * File: 2-strncpy.c
+ * File: source_2-file.c
  * Author: Muhannad Gsgs
  */
 
