@@ -1,7 +1,7 @@
 #include "main.h"
 
 /*
- * File: 1-strncat.c
+ * File: source_1-file.c
  * Author: Muhannad Gsgs
  */
 
