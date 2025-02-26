@@ -6,7 +6,7 @@
  */
 
 /**
- * _strcat - Concatenates two strings.
+ * strcat - Concatenates two strings.
  * @dest: The destination string.
  * @src: The source string.
  *
