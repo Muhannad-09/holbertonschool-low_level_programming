@@ -1,7 +1,7 @@
 #include "main.h"
 
 /*
- * File - 0-strcat.c
+ * File - strcat.c
  * Created by: Muhannad Gsgs 10722@holbertonstudents.com
  */
 
