@@ -1,8 +1,8 @@
 #include "main.h"
 
 /*
- * File - strcat.c
- * Created by: Muhannad Gsgs 10722@holbertonstudents.com
+ * File: 0-strcat.c
+ * Auth: Muhannad Gsgs
  */
 
 /**
