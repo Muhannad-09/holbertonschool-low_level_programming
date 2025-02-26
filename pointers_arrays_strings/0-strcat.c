@@ -1,7 +1,12 @@
 #include "main.h"
 
+/*
+ * File: source_file.c
+ * Author: Muhannad Gsgs
+ */
+
 /**
- * Concatenates two strings.
+ * _strcat - Appends the source string to the destination string.
  * @dest: The destination string.
  * @src: The source string.
  *
