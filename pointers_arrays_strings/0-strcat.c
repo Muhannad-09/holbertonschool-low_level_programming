@@ -1,10 +1,5 @@
 #include "main.h"
 
-/*
- * File: 0-strcat.c
- * Author: Muhannad Gsgs
- */
-
 /**
  * Concatenates two strings.
  * @dest: The destination string.
