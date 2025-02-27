@@ -1,11 +1,5 @@
 #include <stdio.h>
 
-    /**
-     * main - Entry point of the program
-     *
-     * Return: Always 0 (Success)
-     */
-
 int main(void)
 {
 	int n;
@@ -21,13 +15,18 @@ int main(void)
      * - you are not allowed to use a
      * - you are not allowed to modify p
      * - only one statement
-     * - you are not allowed to use ,
-     * - you are not allowed to code anything else than the line of
-     *   code at the expected line
+     * - you are not allowed to use
+     * - you are not allowed to code anything else than the
+     *   line of code at the expected line
      */
 	*(p + 5) = 98;
     /* ...so that this prints 98\n */
 
+    /**
+     * main - Entry point of the program
+     *
+     * Return: Always 0 (Success)
+     */
 	printf("a[2] = %d\n", a[2]);
 	return (0);
 }
