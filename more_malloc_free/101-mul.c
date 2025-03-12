@@ -208,5 +208,8 @@ int main(int argc, char *argv[])
 		rolltmp += _addup(calc, lsum, i), final[i] = rolltmp % 10 + '0';
 	final[i + 1] = '\0', i = cut_zeros(final), rev_(final);
 	final[i + 2] = '\0', _prt(final), free(calc), free(final);
+				free(calc);
+				free(final);
+
 	return (0);
 }
