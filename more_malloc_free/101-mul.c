@@ -1,215 +1,155 @@
 #include <stdlib.h>
-#include "main.h"
+#include <stdio.h>
 
 /**
- * _prt - print string followed by newline
- * @s: string to print
+ * _isdigit - Checks if a string contains only digits.
+ * @s: The string to check.
+ * Return: 1 if the string contains only digits, 0 otherwise.
  */
-
-void _prt(char *s)
+int _isdigit(char *s)
 {
-	while (*s != '\0')
-		_putchar(*s++);
-	_putchar('\n');
-}
-
-/**
- * _realloc - Re-allocate memory for a larger or smaller size
- * @ptr: Pointer to the old memory block
- * @old_size: The old size of the memory block
- * @new_size: The new size of the memory block being created
- *
- * Return: Pointer to new memory
- */
-
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
-{
-	void *space;
-	char *spacecpy, *ptrcpy;
-	unsigned int i;
-
-	if (new_size == 0 && ptr != NULL)
+	while (*s)
 	{
-		free(ptr);
-		return (NULL);
-	}
-	if (new_size == old_size)
-		return (ptr);
-	/* regardless, we need to make new space of new_size */
-	space = malloc(new_size);
-	if (space == NULL)
-		return (NULL);
-	/* if ptr is null, return space without copying */
-	if (ptr == NULL)
-		return (space);
-	/* copy old contents into new space */
-	spacecpy = space;
-	ptrcpy = ptr;
-	for (i = 0; i < old_size && i < new_size; i++)
-		spacecpy[i] = ptrcpy[i];
-	free(ptr);
-	return (space);
-}
-
-/**
- * _calloc - Allocate memory and initalize space to zero
- * @nmemb: number of elements
- * @size: size of bytes
- *
- * Return: pointer to memory space, or NULL
- */
-
-void *_calloc(unsigned int nmemb, unsigned int size)
-{
-	void *space;
-	char *memset;
-	unsigned int i;
-
-	if (nmemb == 0 || size == 0)
-		return (NULL);
-	space = malloc(nmemb * size);
-	if (space == NULL)
-		return (NULL);
-
-	memset = space;
-	for (i = 0 ; i < nmemb * size; i++)
-	{
-		*(memset + i) = 0;
-	}
-
-	return (space);
-}
-
-/**
- * _notdigit - check to see if string is only digits
- * @s: string to check
- *
- * Return: 0 if only digits, 1 if non digit chars
- */
-
-int _notdigit(char *s)
-{
-	for ( ; *s; s++)
 		if (*s < '0' || *s > '9')
-			return (1);
-	return (0);
-}
-
-/**
- * rev_ - Reverse a string in place
- * @s: string to reverse
- */
-
-void rev_(char *s)
-{
-	char tmp;
-	int i, j;
-
-	for (i = 0; s[i]; i++)
-		;
-	i--;
-	for (j = 0; j <= i / 2; j++)
-	{
-		tmp = s[j];
-		s[j] = s[i - j];
-		s[i - j] = tmp;
-	}
-}
-
-/**
- * _addup - add up integer array
- * @arr: array to count
- * @n: number of ints to count
- * @place: which tens place to count
- *
- * Return: result of addition
- */
-
-int _addup(int *arr, int n, int place)
-{
-	int sum, i;
-
-	for (i = 0, sum = 0; i < n; i++)
-	{
-		sum += arr[n * i + place];
-	}
-	return (sum);
-}
-
-/**
- * cut_zeros - cut off my zeros
- * @s: string to cut
- *
- * Return: length of s
- */
-
-int cut_zeros(char *s)
-{
-	int i;
-
-	i = 0;
-	while (*s != '\0')
-	{
-		i++;
+			return (0);
 		s++;
 	}
-	i--;
-	s--;
-	while (*s == '0' && i > 0)
-	{
-		*s = '\0';
-		s--;
-		i--;
-	}
-	return (i);
+	return (1);
 }
 
 /**
- * main - multiple two numbers and print the result
- * @argc: Number of arguments
- * @argv: Argument strings
- *
- * Return: 0
+ * _strlen - Calculates the length of a string.
+ * @s: The string.
+ * Return: The length of the string.
  */
+int _strlen(char *s)
+{
+	int len = 0;
 
+	while (s[len])
+		len++;
+
+	return (len);
+}
+
+/**
+ * errors - Prints an error message and exits with status 98.
+ */
+void errors(void)
+{
+	printf("Error\n");
+	exit(98);
+}
+
+/**
+ * initialize_result - Initializes the result array to store the product.
+ * @len: The length of the result array.
+ * Return: Pointer to the initialized array, or NULL if allocation fails.
+ */
+int *initialize_result(int len)
+{
+	int *result = calloc(len, sizeof(int));
+
+	if (result == NULL)
+	{
+		printf("Error\n");
+		exit(98);
+	}
+	return (result);
+}
+
+/**
+ * calculate_product - Performs the multiplication of two strings.
+ * @num1: First number as a string.
+ * @num2: Second number as a string.
+ * @result: The array to store the product.
+ * @len1: Length of num1.
+ * @len2: Length of num2.
+ */
+void calculate_product(char *num1, char *num2, int *result, int len1, int len2)
+{
+	int i, j, carry, digit1, digit2;
+
+	for (i = len1 - 1; i >= 0; i--)
+	{
+		digit1 = num1[i] - '0';
+		carry = 0;
+		for (j = len2 - 1; j >= 0; j--)
+		{
+			digit2 = num2[j] - '0';
+			carry += result[i + j + 1] + (digit1 * digit2);
+			result[i + j + 1] = carry % 10;
+			carry /= 10;
+		}
+		result[i + j + 1] += carry;
+	}
+}
+
+/**
+ * result_to_string - Converts the result array to a string.
+ * @result: The array holding the product digits.
+ * @len: Length of the result array.
+ * Return: Pointer to the result string, or NULL on failure.
+ */
+char *result_to_string(int *result, int len)
+{
+	char *output = malloc(len + 1);
+	int i = 0, j = 0;
+
+	if (output == NULL)
+	{
+		free(result);
+		printf("Error\n");
+		exit(98);
+	}
+
+	while (i < len)
+	{
+		if (result[i] != 0 || j > 0)
+		output[j++] = result[i] + '0';
+		i++;
+	}
+	output[j] = '\0';
+
+	if (j == 0)
+	{
+		output[j++] = '0';
+		output[j] = '\0';
+	}
+
+	free(result);
+	return (output);
+}
+
+/**
+ * main - Multiplies two positive numbers.
+ * @argc: The number of arguments.
+ * @argv: The argument vector.
+ * Return: 0 on success.
+ */
 int main(int argc, char *argv[])
 {
-	int *calc;
-	char *final;
-	unsigned int l1, l2, lsum, i, j, ntmp, rolltmp;
+	char *num1, *num2, *result_str;
+	int len1, len2, len, *result;
 
-	if (argc != 3)
-		_prt("Error"), exit(98);
-	if (_notdigit(argv[1]) || _notdigit(argv[2]))
-		_prt("Error"), exit(98);
-	for (l1 = 0; argv[1][l1]; l1++)
-		;
-	for (l2 = 0; argv[2][l2]; l2++)
-		;
-	lsum = l1 + l2, final = malloc((lsum + 2) * sizeof(*final));
-	calc = _calloc(lsum * lsum, sizeof(int));
-	if (calc == NULL)
-		_prt("Error"), exit(98);
-	rev_(argv[1]), rev_(argv[2]);
-	for (i = 0; i < l1; i++)
+	if (argc != 3 || !_isdigit(argv[1]) || !_isdigit(argv[2]))
 	{
-		rolltmp = 0, ntmp = 0;
-		for (j = 0; j < l2; j++)
-		{
-			ntmp = (argv[1][i] - '0') * (argv[2][j] - '0') + rolltmp;
-			calc[i * lsum + j + i] = ntmp % 10, rolltmp = ntmp / 10;
-		}
-		for (; j < l2 + i; j++, rolltmp /= 10)
-			calc[i * lsum + j + i] = rolltmp % 10;
-		while (rolltmp)
-			calc[i * lsum + j + i] = rolltmp % 10, rolltmp /= 10, j++;
+		printf("Error\n");
+		return (98);
 	}
-	for (i = 0, rolltmp = 0; i < lsum; i++, rolltmp /= 10)
-		rolltmp += _addup(calc, lsum, i), final[i] = rolltmp % 10 + '0';
-	final[i + 1] = '\0', i = cut_zeros(final), rev_(final);
-	final[i + 2] = '\0', _prt(final), free(calc), free(final);
-				free(calc);
-				free(final);
+
+	num1 = argv[1];
+	num2 = argv[2];
+	len1 = _strlen(num1);
+	len2 = _strlen(num2);
+	len = len1 + len2;
+
+	result = initialize_result(len);
+	calculate_product(num1, num2, result, len1, len2);
+	result_str = result_to_string(result, len);
+
+	printf("%s\n", result_str);
+	free(result_str);
 
 	return (0);
 }
