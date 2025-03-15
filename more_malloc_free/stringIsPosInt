@@ -1,0 +1,4 @@
+#!/bin/bash
+if [ ! "$(stringIsPosInt "$arg")" ]; then
+    error_exit 98
+fi
