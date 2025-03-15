@@ -1,106 +1,125 @@
 #include <stdlib.h>
-#include <stdio.h>
 #include "main.h"
 
 /**
- * is_digit - checks if a string contains a non-digit char
- * @s: string to be evaluated
- *
- * Return: 0 if a non-digit is found, 1 otherwise
+ * initDigitArray - initializes array with zeros
+ * @size: size of array
+ * Return: pointer or NULL
  */
-int is_digit(char *s)
+unsigned int *initDigitArray(size_t size)
 {
-	int i = 0;
+	unsigned int *arr = malloc(sizeof(unsigned int) * size);
+	size_t i;
 
-	while (s[i])
+	if (!arr)
+		return (NULL);
+
+	for (i = 0; i < size; i++)
+		arr[i] = 0;
+
+	return (arr);
+}
+
+/**
+ * stringIsPosInt - checks if string is positive integer
+ * @s: input string
+ * Return: 1 if true, 0 otherwise
+ */
+int stringIsPosInt(char *s)
+{
+	size_t i;
+
+	if (!s || !*s)
+		return (0);
+	for (i = 0; s[i]; i++)
 	{
 		if (s[i] < '0' || s[i] > '9')
 			return (0);
-		i++;
 	}
 	return (1);
 }
 
 /**
- * _strlen - returns the length of a string
- * @s: string to evaluate
- *
- * Return: the length of the string
+ * error_exit - prints error and exits with status
+ * @status: exit status
  */
-int _strlen(char *s)
+void error_exit(int status)
 {
+	char *err = "Error\n";
 	int i = 0;
 
-	while (s[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
+	while (err[i])
+		_putchar(err[i++]);
+	exit(status);
 }
 
 /**
- * errors - handles errors for main
+ * stringIntMultiply - multiplies two strings representing integers
+ * @prod_digits: result array
+ * @n1_digits: first number
+ * @n2_digits: second number
+ * @n1_len: first length
+ * @n2_len: second length
  */
-void errors(void)
+void stringIntMultiply(unsigned int *prod_digits, char *n1_digits,
+					   char *n2_digits, size_t n1_len, size_t n2_len)
 {
-	printf("Error\n");
-	exit(98);
-}
+	int i, j, sum, digit1, digit2;
 
-/**
- * main - multiplies two positive numbers
- * @argc: number of arguments
- * @argv: array of arguments
- *
- * Return: always 0 (Success)
- */
-int main(int argc, char *argv[])
-{
-	char *s1, *s2;
-	int len1, len2, len, i, carry, digit1, digit2, *result, a = 0;
-
-	s1 = argv[1], s2 = argv[2];
-	if (argc != 3 || !is_digit(s1) || !is_digit(s2))
-		errors();
-	len1 = _strlen(s1);
-	len2 = _strlen(s2);
-	len = len1 + len2 + 1;
-
-	result = malloc(sizeof(int) * len);
-	if (!result)
-		return (1);
-
-	for (i = 0; i <= len1 + len2; i++)
-		result[i] = 0;
-
-	for (len1 = len1 - 1; len1 >= 0; len1--)
+	for (i = n1_len - 1; i >= 0; i--)
 	{
-		digit1 = s1[len1] - '0';
-		carry = 0;
-		for (len2 = _strlen(s2) - 1; len2 >= 0; len2--)
+		sum = 0;
+		digit1 = n1_digits[i] - '0';
+
+		for (j = n2_len - 1; j >= 0; j--)
 		{
-			digit2 = s2[len2] - '0';
-			carry += result[len1 + len2 + 1] + (digit1 * digit2);
-			result[len1 + len2 + 1] = carry % 10;
-			carry /= 10;
+			digit2 = n2_digits[j] - '0';
+			sum += prod_digits[i + j + 1] + digit1 * digit2;
+			prod_digits[i + j + 1] = sum % 10;
+			sum /= 10;
 		}
-		if (carry > 0)
-			result[len1 + len2 + 1] += carry;
-	}
 
-	for (i = 0; i < len - 1; i++)
-	{
-		if (result[i])
-			a = 1;
-		if (a)
-			_putchar(result[i] + '0');
+		prod_digits[i + j + 1] += sum;
 	}
+}
 
-	if (!a)
+/**
+ * main - entry point
+ * @argc: argument count
+ * @argv: arguments vector
+ * Return: 0 success or 98 error
+ */
+int main(int argc, char **argv)
+{
+	size_t i, av1_len, av2_len, prod_len;
+	unsigned int *prod_digits;
+
+	if (argc != 3 || !stringIsPosInt(argv[1]) || !stringIsPosInt(argv[2]))
+		error_exit(98);
+
+	for (av1_len = 0; argv[1][av1_len]; av1_len++)
+		;
+	for (av2_len = 0; argv[2][av2_len]; av2_len++)
+		;
+
+	prod_len = av1_len + av2_len;
+	prod_digits = initDigitArray(prod_len);
+	if (!prod_digits)
+		error_exit(98);
+
+	stringIntMultiply(prod_digits, argv[1], argv[2], av1_len, av2_len);
+
+	for (i = 0; i < prod_len && prod_digits[i] == 0; i++)
+		;
+
+	if (i == prod_len)
 		_putchar('0');
+	else
+		for (; i < prod_len; i++)
+			_putchar(prod_digits[i] + '0');
 
 	_putchar('\n');
-	free(result);
 
+	free(prod_digits);
 	return (0);
 }
