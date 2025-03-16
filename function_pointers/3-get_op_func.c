@@ -19,11 +19,17 @@ int (*get_op_func(char *s))(int, int)
 	};
 	int i = 0;
 
+	/* Check for invalid operator length */
+	if (s[1] != '\0')
+	{
+		return (NULL);  /* If there are multiple characters, it's an invalid operator */
+	}
+
+	/* Find the operator */
 	while (ops[i].op != NULL)
 	{
 		if (*s == *(ops[i].op))
 			return (ops[i].f);
 		i++;
 	}
-	return (NULL);
-}
+	return
